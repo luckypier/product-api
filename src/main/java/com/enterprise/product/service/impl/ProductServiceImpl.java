@@ -27,28 +27,26 @@ public class ProductServiceImpl implements ProductService {
     public Mono<Product> getById(final Integer id) {
 
         return productDao.findById(id)
-                .flatMap(savedProduct -> {
-                    return zip(
-                            productDetailDao.findByIdProduct(id).collectList(),
-                            productClient.getNames(id),
-                            productClient.getManufacturing(id))
-                            .flatMap(data -> {
-                                List<ProductDetail> details = data.getT1();
-                                Product cached = data.getT2();
-                                Product external = data.getT3();
+                .flatMap(savedProduct -> zip(
+                        productDetailDao.findByIdProduct(id).collectList(),
+                        productClient.getNames(id),
+                        productClient.getManufacturing(id))
+                        .flatMap(data -> {
+                            List<ProductDetail> details = data.getT1();
+                            Product cached = data.getT2();
+                            Product external = data.getT3();
 
-                                Product product = new Product();
-                                product.setId(savedProduct.getId());
-                                product.setCategory(savedProduct.getCategory());
-                                product.setDetails(details);
-                                product.setName(cached.getName());
-                                product.setLongDescription(cached.getLongDescription());
-                                product.setManufacturer(external.getManufacturer());
-                                product.setSku(external.getSku());
-                                return Mono.just(product);
-                            })
-                            .singleOrEmpty();
-                });
+                            Product product = new Product();
+                            product.setId(savedProduct.getId());
+                            product.setCategory(savedProduct.getCategory());
+                            product.setDetails(details);
+                            product.setName(cached.getName());
+                            product.setLongDescription(cached.getLongDescription());
+                            product.setManufacturer(external.getManufacturer());
+                            product.setSku(external.getSku());
+                            return Mono.just(product);
+                        })
+                        .singleOrEmpty());
     }
 
     //TODO: transactional, not found exception
@@ -61,10 +59,7 @@ public class ProductServiceImpl implements ProductService {
 
                     List<ProductDetail> details =
                             product.getDetails().stream()
-                                    .map(productDetail -> {
-                                        productDetail.setIdProduct(saved.getId());
-                                        return productDetail;
-                                    })
+                                    .peek(productDetail -> productDetail.setIdProduct(saved.getId()))
                                     .collect(toList());
 
                     return productDetailDao.saveAll(details)

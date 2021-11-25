@@ -1,14 +1,14 @@
 #rest server
-server.port: 8888
+server.port: 8081
 
 #logging
 logging.level:
   org:
     springframework:
       boot:
-        web: INFO
-      data.r2dbc: INFO
-  io.r2dbc: INFO
+        web: DEBUG
+      data.r2dbc: TRACE
+  io.r2dbc: TRACE
 
 #database
 spring:
@@ -24,9 +24,9 @@ spring:
       validation-query: SELECT 1
   cache:
     cache-names: products
-    caffeine.spec: maximumSize=500,expireAfterAccess=5000s
+    caffeine.spec: maximumSize=50,expireAfterAccess=60000s
 
 #api
 product:
   api:
-    client: http://localhost:8888
+    client: http://localhost:8081

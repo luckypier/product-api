@@ -8,8 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
-import static java.util.concurrent.TimeUnit.MINUTES;
-
 @Lazy(value = false)
 @Configuration
 @EnableCaching
@@ -21,8 +19,8 @@ public class CacheConfig {
     }
 
     @Bean
-    public CacheManager cacheManager(Caffeine caffeine) {
-        CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager();
+    public CacheManager cacheManager(final Caffeine caffeine) {
+        var caffeineCacheManager = new CaffeineCacheManager();
         caffeineCacheManager.setCaffeine(caffeine);
         return caffeineCacheManager;
     }

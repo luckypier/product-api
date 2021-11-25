@@ -11,13 +11,6 @@ public class ProductEntity {
     @Id
     private Integer id;
 
-//    private String name;
-
-//    private String manufacturer;
-
     private String category;
 
-//    private String longDescription;
-
-//    private String sku;
 }
