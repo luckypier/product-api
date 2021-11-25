@@ -1,0 +1,33 @@
+#rest server
+server.port: 8081
+
+#logging
+logging.level:
+#  root: DEBUG
+  org:
+    springframework:
+      boot:
+        web: DEBUG
+      data.r2dbc: TRACE
+  io.r2dbc: TRACE
+
+#database
+spring:
+  main:
+    lazy-initialization: true
+  h2:
+    console.enabled: true
+  r2dbc:
+    url: 'r2dbc:h2:mem:///testdb;DB_CLOSE_DELAY=-1'
+    pool:
+      initial-size: 10
+      max-size: 10
+      validation-query: SELECT 1
+  cache:
+    cache-names: products
+    caffeine.spec: maximumSize=50,expireAfterAccess=60000s
+
+#api
+product:
+  api:
+    client: http://localhost:8081
