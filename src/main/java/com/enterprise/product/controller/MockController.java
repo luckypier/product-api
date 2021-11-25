@@ -14,7 +14,7 @@ import static java.util.Arrays.asList;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 @RestController
-@RequestMapping("/mock")
+@RequestMapping("/mocks")
 public class MockController {
 
     private final List<String> NAMES = asList(

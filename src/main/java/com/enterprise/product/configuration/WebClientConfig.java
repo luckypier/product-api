@@ -8,13 +8,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
-    @Value("${product.api.client}")
-    private String productApiClient;
+    @Value("${mocks.api.url}")
+    private String mocksApiUrl;
 
     @Bean
     public WebClient setWebClient() {
         return WebClient.builder()
-                .baseUrl(productApiClient)
+                .baseUrl(mocksApiUrl)
                 .build();
     }
 

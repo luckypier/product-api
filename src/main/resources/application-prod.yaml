@@ -27,6 +27,6 @@ spring:
     caffeine.spec: maximumSize=500,expireAfterAccess=5000s
 
 #api
-product:
+mocks:
   api:
-    client: http://localhost:8888
+    url: http://localhost:8888

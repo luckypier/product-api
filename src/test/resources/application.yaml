@@ -1,5 +1,5 @@
 #rest server
-server.port: 8081
+server.port: 8080
 
 #logging
 logging.level:
@@ -27,6 +27,6 @@ spring:
     caffeine.spec: maximumSize=50,expireAfterAccess=60000s
 
 #api
-product:
+mocks:
   api:
-    client: http://localhost:8081
+    url: http://localhost:8080

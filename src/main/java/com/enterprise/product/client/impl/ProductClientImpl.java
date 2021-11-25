@@ -21,7 +21,7 @@ public class ProductClientImpl implements ProductClient {
     public Mono<Product> getNames(final Integer id) {
 
         return webClient.get()
-                .uri("/mock/{id}/naming", id)
+                .uri("/mocks/{id}/naming", id)
                 .retrieve().bodyToMono(Product.class)
                 .cache();
     }
@@ -30,7 +30,7 @@ public class ProductClientImpl implements ProductClient {
     public Mono<Product> getManufacturing(final Integer id) {
 
         return webClient.get()
-                .uri("/mock/{id}/manufacturing", id)
+                .uri("/mocks/{id}/manufacturing", id)
                 .retrieve().bodyToMono(Product.class)
                 .cache();
     }
