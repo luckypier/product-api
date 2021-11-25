@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
@@ -32,10 +35,9 @@ public class ProductController {
                 .map(product -> product);
     }
 
-    //TODO: validate input
     @PostMapping
     @ResponseStatus(CREATED)
-    public Mono<Product> create(@RequestBody Product product) {
+    public Mono<Product> create(@Valid @RequestBody Product product) {
 
         if (nonNull(product.getId())) {
             return Mono.error(() -> new RuntimeException("Id value must not be setted"));
@@ -43,13 +45,15 @@ public class ProductController {
         return productService.save(product);
     }
 
-
-    //TODO: could implement more logic validations
     @PutMapping("/{id}")
     @ResponseStatus(OK)
     public Mono<Product> update(
-            @RequestBody Product product,
+            @Valid @RequestBody Product product,
             @PathVariable(value = "id") Integer id) {
+
+        if (isNull(product.getId())) {
+            return Mono.error(() -> new RuntimeException("Id value must be setted"));
+        }
 
         return productService.save(product);
     }

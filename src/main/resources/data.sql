@@ -1,3 +1,4 @@
+    --TODO: use flyway or liquibase
 
 INSERT INTO product (category) VALUES ('TABLET');
 INSERT INTO product (category) VALUES ('PHONE');
